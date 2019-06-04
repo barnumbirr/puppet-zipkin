@@ -1,0 +1,39 @@
+{
+  "name": "barnumbirr-zipkin",
+  "version": "0.1.0",
+  "author": "barnumbirr",
+  "summary": "Install and manage Apache Zipkin via Puppet",
+  "license": "Apache-2.0",
+  "source": "https://github.com/barnumbirr/puppet-zipkin.git",
+  "project_page": "https://github.com/barnumbirr/puppet-zipkin",
+  "issues_url": "https://github.com/barnumbirr/puppet-zipkin/issues",
+  "tags": [
+    "zipkin",
+    "openzipkin",
+    "apache",
+    "tracing"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+    },
+    {
+      "operatingsystem": "Ubuntu",
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=2.6.0 < 7.0.0"
+    }
+  ],
+  "pdk-version": "1.10.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git#1.10.0",
+  "template-ref": "1.10.0-0-gbba9ac3"
+}
