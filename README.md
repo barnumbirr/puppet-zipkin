@@ -4,9 +4,19 @@
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/barnumbirr/zipkin.svg)](https://forge.puppetlabs.com/barnumbirr/zipkin)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/barnumbirr/zipkin.svg)](https://forge.puppetlabs.com/barnumbirr/zipkin)
 
-1. [Description](#description)
-2. [Usage - Configuration options](#basic-usage)
-    * [Class Parameters](#class-parameters)
+1. [Module Description - What the module does and why it is useful](#description)
+2. [Usage - Configuration options and additional functionality](#usage)
+    * [Prerequisites](#prerequisites)
+    * [Beginning with Apache Zipkin](#beginning-with-apache-zipkin)
+    * [More complex example](#more-complex-example)
+3. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+    * [Classes](#classes)
+        * [Public Classes](#public-classes)
+        * [Private Classes](#private-classes)
+    * [Classes](#classes)
+        * [Zipkin Parameters](#zipkin-parameters)
+        * [Java JVM parameters](#java-jvm-parameters)
+        * [Miscellaneous parameters](#miscellaneous-parameters)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [License](#license)
 
@@ -16,6 +26,10 @@ This module installs, configures and upgrades [Apache Zipkin](https://zipkin.apa
 It helps gather timing data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data.
 
 ## Usage
+
+### Prerequisites
+
+TODO
 
 ### Beginning with Apache Zipkin
 
@@ -56,6 +70,12 @@ TODO
 #### Zipkin parameters
 
 TODO
+
+#### Java JVM parameters
+
+TODO
+
+#### Miscellaneous parameters
 
 ## Limitations
 
