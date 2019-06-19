@@ -1,0 +1,131 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides: Zipkin
+# Required-Start:
+# Required-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start/Stop Apache Zipkin
+# Description:       Apache Zipkin distributed tracing system
+#                    This service starts/stops a Zipkin server.
+### END INIT INFO
+
+# Source function library.
+<%- if @osfamily == "RedHat" -%>
+. /etc/rc.d/init.d/functions
+<%- elsif @osfamily == "Debian" -%>
+. /lib/lsb/init-functions
+<%- end -%>
+
+SERVICE='zipkin'
+JAR_NAME="zipkin.jar"
+PID_FILE="/var/run/$SERVICE.pid"
+USER="<%= scope['zipkin::user'] %>"
+PATH="<%= scope.lookupvar('zipkin::installdir') %>"
+export JAVA_HOME=<%= scope.lookupvar('zipkin::javahome') %>
+JAVA_XMS="<%= scope.lookupvar('zipkin::jvm_xms') %>"
+JAVA_XMX="<%= scope.lookupvar('zipkin::jvm_xmx') %>"
+JAVA_OPTS="<%= scope['zipkin::java_opts'] %>"
+
+function get_pid() {
+    cat "$PID_FILE"
+}
+
+function is_running() {
+    [ -f "$PID_FILE" ] && ps -p `get_pid` > /dev/null 2>&1
+}
+
+function restart() {
+    stop
+    if is_running; then
+        echo "Unable to stop, will not attempt to start"
+        exit 1
+    fi
+    start
+}
+
+function stop() {
+    if is_running; then
+        echo -n $"Shutting down $SERVICE."
+        kill `get_pid`
+        for i in `seq 10`
+        do
+            if ! is_running; then
+                break
+            fi
+
+            echo -n "."
+            sleep 1
+        done
+        echo
+
+        if is_running; then
+            echo "$SERVICE not stopped; may still be shutting down or shutdown may have failed."
+            exit 1
+        else
+            echo "Stopped"
+            if [ -f "$PID_FILE" ]; then
+                rm "$PID_FILE"
+            fi
+        fi
+    else
+        echo "$SERVICE not running."
+    fi
+}
+
+function start() {
+    if is_running; then
+        echo "$SERVICE already started."
+    else
+        echo "Starting $SERVICE."
+        cd $PATH
+        if [ -z $PATH ]; then
+            sudo -u "$user" ${JAVA_HOME}/bin/java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} ${JAVA_OPTS} -jar ${JAR_NAME} &
+        fi
+        echo $! > "$pid_file"
+        if ! is_running; then
+            echo "Unable to start, see logs."
+            exit 1
+        fi
+    fi
+}
+
+function status() {
+    if is_running; then
+        echo "$SERVICE is running."
+    else
+        echo "$SERVICE is stopped."
+        exit 1
+    fi
+}
+
+function execute() {
+  case "$1" in
+    start)
+      start
+      RETVAL=$?
+      ;;
+    stop)
+      stop
+      RETVAL=$?
+      ;;
+    status)
+    <%- if @osfamily == "RedHat" -%>
+        status -p $PID_FILE $SERVICE
+    <%- else -%>
+        status_of_proc -p $PID_FILE ${JAVA_HOME}/bin/java $SERVICE
+    <%- end -%>
+        RETVAL=$?
+    ;;
+    restart)
+      restart
+      RETVAL=$?
+      ;;
+    *)
+      echo "Usage: $SERVICE {start|stop|status|restart}"
+      RETVAL=2
+  esac
+}
+
+exit $RETVAL

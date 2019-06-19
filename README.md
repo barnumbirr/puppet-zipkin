@@ -12,11 +12,12 @@
 
 ## Description
 
-Install and manage [Apache Zipkin](https://zipkin.apache.org/) via Puppet.
+This module installs, configures and upgrades [Apache Zipkin](https://zipkin.apache.org/) via Puppet. Zipkin is a distributed tracing system.
+It helps gather timing data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data.
 
-## Basic Usage
+## Usage
 
-### Install rinetd with default config
+### Beginning with Apache Zipkin
 
 ```puppet
 class { '::java':
@@ -26,28 +27,45 @@ class { '::java':
 class { '::elasticsearch':
 } ->
 class { 'zipkin':
+    # JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+    javahome => '/usr/lib/jvm/java-8-openjdk-amd64/jre/',
 }
 ```
 
-### Class Parameters
+### More complex example
+```puppet
+TODO
+```
 
-| Parameter           | Type    | Default             | Description |
-| :-------------------| :------ |:------------------- | :---------- |
-| allow               | array   | []                  | set allow rules |
-| autoupgrade         | boolean | false               | ugrade package automatically if there is a newer version |
-| deny                | array   | []                  | set deny rules |
-| rules               | array   | []                  | set forwarding rules |
-| logfile             | string  | /var/log/rinetd.log | set logfile path |
-| logcommon           | boolean | false               | use web-server style logfile format |
-| ensure              | string  | present             | latest,present or absent |
-| service_manage      | boolean | true                | manage rinetd service state |
-| service_restart     | boolean | true                | manage service restart |
+## Reference
+
+### Classes
+
+#### Public Classes
+
+* `zipkin`: Main class, manages the installation and configuration of Apache Zipkin.
+
+#### Private Classes
+
+* `zipkin::install`: Installs Zipkin jar file
+* `zipkin::params`: Default params
+* `zipkin::service`: Manage the Zipkin service
+
+### Parameters
+
+#### Zipkin parameters
+
+TODO
 
 ## Limitations
 
-This module is currently only written to work on Debian based operating
-systems, although it may work on others. The supported Puppet versions are
-defined in the [metadata.json](metadata.json)
+* Puppet 4.10.0 or newer
+
+The puppetlabs repositories can be found at: [yum.puppetlabs.com](https://yum.puppetlabs.com) and [apt.puppetlabs.com](https://apt.puppetlabs.com/)
+
+* RedHat/CentOS 6/7
+* Ubuntu 14.04/16.04/18.04/19.04
+* Debian 9/10
 
 ## License:
 

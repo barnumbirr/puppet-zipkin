@@ -1,0 +1,18 @@
+[Unit]
+Description=Zipkin
+Documentation=https://zipkin.io
+Wants=network-online.target
+After=network-online.target
+After=elasticsearch.service
+
+[Service]
+Type=simple
+Restart=always
+User=<%= scope.lookupvar('$zipkin::user') %>
+Group=<%= scope.lookupvar('$zipkin::group') %>
+WorkingDirectory=<%= scope.lookupvar('zipkin::installdir') %>
+Environment="JAVA_HOME=<%= scope.lookupvar('zipkin::javahome') %>"
+ExecStart=-Xms<%= scope.lookupvar('zipkin::jvm_xms') %> -Xmx<%= scope.lookupvar('zipkin::jvm_xmx') %> <%= scope['zipkin::java_opts'] %> -jar <%= scope.lookupvar('jar_name') %>
+
+[Install]
+WantedBy=multi-user.target
