@@ -14,8 +14,8 @@ class zipkin::install {
             ensure => present,
             system => true,
             gid    => $zipkin::gid,
-        }->
-        user { $zipkin::user:
+        }
+        -> user { $zipkin::user:
             ensure           => present,
             comment          => 'Zipkin distributed tracing system account',
             shell            => $zipkin::shell,
@@ -40,16 +40,16 @@ class zipkin::install {
 
     archive { 'zipkin':
         ensure          => 'present',
-        source          => 'https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar',
-        checksum_url    => 'https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar.sha1'
+        source          => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar",
+        checksum_url    => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar.sha1",
         checksum_verify => $zipkin::checksum_verify,
-        checksum_type   => 'sha1'
-        path            => "${zipkin::installdir}/${jar_name}",
+        checksum_type   => 'sha1',
+        path            => "${zipkin::installdir}/${zipkin::install::jar_name}",
         require         => [User[$zipkin::user],File[$zipkin::installdir]],
         user            => $zipkin::user,
     }
 
-    file { "${zipkin::installdir}/${jar_name}":
+    file { "${zipkin::installdir}/${zipkin::install::jar_name}":
         ensure  => 'file',
         owner   => $zipkin::user,
         group   => $zipkin::group,
@@ -57,7 +57,7 @@ class zipkin::install {
         require => [
             User[$zipkin::user],
             Group[$zipkin::group],
-            Archive[${jar_name}],
+            Archive[zipkin],
         ],
     }
 }

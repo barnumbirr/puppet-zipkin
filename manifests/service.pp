@@ -17,7 +17,7 @@ class zipkin::service (
 
     assert_private()
 
-    if($refresh_systemd) {
+    if($::refresh_systemd) {
         include systemd::systemctl::daemon_reload
     }
 
@@ -25,7 +25,7 @@ class zipkin::service (
         content => template($service_file_template),
         mode    => '0755',
         notify  => [
-            $refresh_systemd ? {
+            $::refresh_systemd ? {
                 true    => Class['systemd::systemctl::daemon_reload'],
                 default => undef
             }
