@@ -7,6 +7,7 @@ class zipkin (
     Stdlib::Absolutepath $shell                                    = '/bin/false',
     Boolean $manage_user                                           = true,
     Stdlib::Absolutepath $installdir                               = '/opt/zipkin',
+    String $jarname                                                = 'zipkin.jar',
     Pattern[/^(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)(|[a-z])$/] $version = '2.14.0',
     $javahome                                                      = undef ,
     $jvm_xms                                                       = '256m',

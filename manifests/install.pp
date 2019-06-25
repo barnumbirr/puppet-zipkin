@@ -7,7 +7,6 @@
 class zipkin::install {
 
     include 'archive'
-    $jar_name = 'zipkin.jar'
 
     if $zipkin::manage_user {
         group { $zipkin::group:
@@ -44,12 +43,12 @@ class zipkin::install {
         checksum_url    => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar.sha1",
         checksum_verify => $zipkin::checksum_verify,
         checksum_type   => 'sha1',
-        path            => "${zipkin::installdir}/${zipkin::install::jar_name}",
+        path            => "${zipkin::installdir}/${zipkin::jarname}",
         require         => [User[$zipkin::user],File[$zipkin::installdir]],
         user            => $zipkin::user,
     }
 
-    file { "${zipkin::installdir}/${zipkin::install::jar_name}":
+    file { "${zipkin::installdir}/${zipkin::jarname}":
         ensure  => 'file',
         owner   => $zipkin::user,
         group   => $zipkin::group,

@@ -19,7 +19,7 @@
 <%- end -%>
 
 SERVICE='zipkin'
-JAR_NAME="zipkin.jar"
+JAR_NAME="<%= scope.lookupvar('zipkin::jarname') %>"
 PID_FILE="/var/run/$SERVICE.pid"
 USER="<%= scope['zipkin::user'] %>"
 PATH="<%= scope.lookupvar('zipkin::installdir') %>"
