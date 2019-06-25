@@ -40,8 +40,8 @@ class zipkin::install {
 
     archive { 'zipkin':
         ensure          => 'present',
-        source          => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar",
-        checksum_url    => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::source}/zipkin-server-${zipkin::source}-exec.jar.sha1",
+        source          => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar",
+        checksum_url    => "https://repo1.maven.org/maven2/org/apache/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar.sha1",
         checksum_verify => $zipkin::checksum_verify,
         checksum_type   => 'sha1',
         path            => "${zipkin::installdir}/${zipkin::install::jar_name}",
