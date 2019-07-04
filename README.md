@@ -29,7 +29,8 @@ It helps gather timing data needed to troubleshoot latency problems in microserv
 
 ### Prerequisites
 
-TODO
+To use this module ```Java``` and ```Elasticsearch``` will need to be installed. We recommend managing your Java installation with
+[puppetlabs-java](https://forge.puppet.com/puppetlabs/java) and Elasticsearch with [elastic-elasticsearch](https://forge.puppet.com/elastic/elasticsearch).
 
 ### Beginning with Apache Zipkin
 
@@ -37,18 +38,40 @@ TODO
 class { '::java':
   package => 'openjdk-8-jre',
   version => '8u111-b14-2~bpo8+1',
-} ->
+}->
 class { '::elasticsearch':
-} ->
-class { 'zipkin':
+}->
+class { '::zipkin':
     # JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
-    javahome => '/usr/lib/jvm/java-8-openjdk-amd64/jre/',
+    javahome => '/usr/lib/jvm/java-8-openjdk-amd64/jre',
 }
 ```
 
-### More complex example
+### More complex example (using hiera)
 ```puppet
-TODO
+java::package: openjdk-8-jre-headless
+java::version: '8u212-b03-2~deb9u1'
+
+# Elasticsearch 6
+elasticsearch::version: '6.8.1'
+elasticsearch::manage_repo: true
+elasticsearch::java_install: false
+elasticsearch::restart_on_change: true
+elasticsearch::instances:
+  default:
+    config:
+      'cluster.name': 'zipkin'
+      'node.name': 'zipkin'
+      'network.host': '127.0.0.1'
+
+zipkin::javahome: '/usr/lib/jvm/java-8-openjdk-amd64/jre'
+zipkin::version: '2.14.0'
+zipkin::user: 'zipkin'
+zipkin::group: 'zipkin'
+zipkin::installdir: '/opt/zipkin'
+zipkin::jvm_xms: '512m'
+zipkin::jvm_xmx: '2048m'
+zipkin::java_opts: '-DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:9200'
 ```
 
 ## Reference
@@ -62,7 +85,7 @@ TODO
 #### Private Classes
 
 * `zipkin::install`: Installs Zipkin jar file
-* `zipkin::params`: Default params
+* `zipkin::params`: Modifiy Zipkin configuration
 * `zipkin::service`: Manage the Zipkin service
 
 ### Parameters
