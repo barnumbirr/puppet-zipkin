@@ -48,7 +48,7 @@ class { '::zipkin':
 ```
 
 ### More complex example (using hiera)
-```puppet
+```yaml
 java::package: openjdk-8-jre-headless
 java::version: '8u212-b03-2~deb9u1'
 
