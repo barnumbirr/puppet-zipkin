@@ -52,7 +52,6 @@ class { '::zipkin':
 java::package: openjdk-8-jre-headless
 java::version: '8u212-b03-2~deb9u1'
 
-# Elasticsearch 6
 elasticsearch::version: '6.8.1'
 elasticsearch::manage_repo: true
 elasticsearch::java_install: false
