@@ -43,7 +43,7 @@ class { '::elasticsearch':
 }->
 class { '::zipkin':
     # JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
-    javahome => '/usr/lib/jvm/java-8-openjdk-amd64/jre',
+    javahome => '/usr/lib/jvm/java-11-openjdk-amd64/',
 }
 ```
 
@@ -51,6 +51,7 @@ class { '::zipkin':
 ```yaml
 java::package: openjdk-8-jre-headless
 java::version: '8u212-b03-2~deb9u1'
+java::java_home: '/usr/lib/jvm/java-11-openjdk-amd64/'
 
 elasticsearch::version: '6.8.1'
 elasticsearch::manage_repo: true
@@ -63,7 +64,7 @@ elasticsearch::instances:
       'node.name': 'zipkin'
       'network.host': '127.0.0.1'
 
-zipkin::javahome: '/usr/lib/jvm/java-8-openjdk-amd64/jre'
+zipkin::javahome: "%{hiera('java::java_home')}"
 zipkin::version: '2.14.0'
 zipkin::user: 'zipkin'
 zipkin::group: 'zipkin'

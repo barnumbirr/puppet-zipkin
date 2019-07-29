@@ -81,7 +81,7 @@ function start() {
         echo "Starting $SERVICE."
         cd $PATH
         if [ -z $PATH ]; then
-            sudo -u "$user" ${JAVA_HOME}/bin/java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} ${JAVA_OPTS} -jar ${JAR_NAME} &
+            sudo -u "$user" ${JAVA_HOME}bin/java -Xms${JAVA_XMS} -Xmx${JAVA_XMX} ${JAVA_OPTS} -jar ${JAR_NAME} &
         fi
         echo $! > "$pid_file"
         if ! is_running; then
