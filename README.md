@@ -36,8 +36,9 @@ To use this module ```Java``` and ```Elasticsearch``` will need to be installed.
 
 ```puppet
 class { '::java':
-  package => 'openjdk-8-jre',
-  version => '8u111-b14-2~bpo8+1',
+  package   => 'openjdk-11-jre-headless',
+  version   => '11.0.4+11-1~deb10u1',
+  java_home => '/usr/lib/jvm/java-11-openjdk-amd64/',
 }->
 class { '::elasticsearch':
 }->
@@ -49,23 +50,36 @@ class { '::zipkin':
 
 ### More complex example (using hiera)
 ```yaml
-java::package: openjdk-8-jre-headless
-java::version: '8u212-b03-2~deb9u1'
+java::package: openjdk-11-jre-headless
+java::version: '11.0.4+11-1~deb10u1'
 java::java_home: '/usr/lib/jvm/java-11-openjdk-amd64/'
 
-elasticsearch::version: '6.8.1'
+elasticsearch::version: '6.8.2'
 elasticsearch::manage_repo: true
 elasticsearch::java_install: false
 elasticsearch::restart_on_change: true
+elasticsearch::status: 'enabled'
 elasticsearch::instances:
   default:
     config:
       'cluster.name': 'zipkin'
       'node.name': 'zipkin'
       'network.host': '127.0.0.1'
+    jvm_options:
+      - '-Xms2G'
+      - '-Xmx4G'
+      - '8:-XX:+PrintGCDetails'
+      - '8:-XX:GCLogFileSize=64m'
+      - '8:-XX:+PrintGCDateStamps'
+      - '8:-XX:NumberOfGCLogFiles=32'
+      - '8:-XX:+UseGCLogFileRotation'
+      - '8:-XX:+PrintTenuringDistribution'
+      - '9:-XX:+UseConcMarkSweepGC'
+      - '8:-Xloggc:/var/log/elasticsearch/default/gc.log'
+      - '9-:-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/default/gc.log:utctime,pid,tags:filecount=32,filesize=64m'
 
 zipkin::javahome: "%{hiera('java::java_home')}"
-zipkin::version: '2.14.0'
+zipkin::version: '2.16.1'
 zipkin::user: 'zipkin'
 zipkin::group: 'zipkin'
 zipkin::installdir: '/opt/zipkin'
