@@ -1,5 +1,4 @@
 class zipkin (
-
     String $user                                                   = 'zipkin',
     String $group                                                  = 'zipkin',
     $uid                                                           = undef,
