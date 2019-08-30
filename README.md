@@ -2,7 +2,6 @@
 
 [![Puppet Forge](https://img.shields.io/puppetforge/v/barnumbirr/zipkin.svg)](https://forge.puppetlabs.com/barnumbirr/zipkin)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/barnumbirr/zipkin.svg)](https://forge.puppetlabs.com/barnumbirr/zipkin)
-[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/barnumbirr/zipkin.svg)](https://forge.puppetlabs.com/barnumbirr/zipkin)
 
 1. [Module Description - What the module does and why it is useful](#description)
 2. [Usage - Configuration options and additional functionality](#usage)
@@ -105,14 +104,19 @@ zipkin::java_opts: '-DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:920
 ### Parameters
 
 #### Zipkin parameters
-
+```
 TODO
+```
 
 #### Java JVM parameters
-
+```
 TODO
+```
 
 #### Miscellaneous parameters
+```
+TODO
+```
 
 ## Limitations
 
