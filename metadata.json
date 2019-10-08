@@ -2,7 +2,7 @@
   "name": "barnumbirr-zipkin",
   "version": "0.3.0",
   "author": "barnumbirr",
-  "summary": "Install and manage Apache Zipkin via Puppet",
+  "summary": "Install and manage OpenZipkin via Puppet",
   "license": "Apache-2.0",
   "source": "https://github.com/barnumbirr/puppet-zipkin.git",
   "project_page": "https://github.com/barnumbirr/puppet-zipkin",

@@ -6,7 +6,7 @@
 1. [Module Description - What the module does and why it is useful](#description)
 2. [Usage - Configuration options and additional functionality](#usage)
     * [Prerequisites](#prerequisites)
-    * [Beginning with Apache Zipkin](#beginning-with-apache-zipkin)
+    * [Beginning with OpenZipkin](#beginning-with-openzipkin)
     * [More complex example](#more-complex-example)
 3. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Classes](#classes)
@@ -21,7 +21,7 @@
 
 ## Description
 
-This module installs, configures and upgrades [Apache Zipkin](https://zipkin.apache.org/) via Puppet. Zipkin is a distributed tracing system.
+This module installs, configures and upgrades [OpenZipkin](https://zipkin.io/) via Puppet. Zipkin is a distributed tracing system.
 It helps gather timing data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data.
 
 ## Usage
@@ -31,7 +31,7 @@ It helps gather timing data needed to troubleshoot latency problems in microserv
 To use this module ```Java``` and ```Elasticsearch``` will need to be installed. We recommend managing your Java installation with
 [puppetlabs-java](https://forge.puppet.com/puppetlabs/java) and Elasticsearch with [elastic-elasticsearch](https://forge.puppet.com/elastic/elasticsearch).
 
-### Beginning with Apache Zipkin
+### Beginning with OpenZipkin
 
 ```puppet
 class { '::java':
@@ -93,7 +93,7 @@ zipkin::java_opts: '-DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:920
 
 #### Public Classes
 
-* `zipkin`: Main class, manages the installation and configuration of Apache Zipkin.
+* `zipkin`: Main class, manages the installation and configuration of OpenZipkin.
 
 #### Private Classes
 
