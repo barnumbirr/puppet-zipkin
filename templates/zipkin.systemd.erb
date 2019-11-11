@@ -10,9 +10,9 @@ Type=simple
 Restart=always
 User=<%= scope.lookupvar('zipkin::user') %>
 Group=<%= scope.lookupvar('zipkin::group') %>
-WorkingDirectory=<%= scope.lookupvar('zipkin::installdir') %>
-Environment="JAVA_HOME=<%= scope.lookupvar('zipkin::javahome') %>"
-ExecStart=/usr/bin/env ${JAVA_HOME}bin/java -Xms<%= scope.lookupvar('zipkin::jvm_xms') %> -Xmx<%= scope.lookupvar('zipkin::jvm_xmx') %> <%= scope['zipkin::java_opts'] %> -jar <%= scope.lookupvar('zipkin::jarname') %>
+WorkingDirectory=<%= scope.lookupvar('zipkin::install_dir') %>
+Environment="JAVA_HOME=<%= scope.lookupvar('zipkin::java_home') %>"
+ExecStart=/usr/bin/env ${JAVA_HOME}bin/java -Xms<%= scope.lookupvar('zipkin::jvm_xms') %> -Xmx<%= scope.lookupvar('zipkin::jvm_xmx') %> <%= scope['zipkin::java_opts'] %> -jar <%= scope.lookupvar('zipkin::jar_name') %>
 
 [Install]
 WantedBy=multi-user.target

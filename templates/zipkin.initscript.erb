@@ -19,11 +19,11 @@
 <%- end -%>
 
 SERVICE='zipkin'
-JAR_NAME="<%= scope.lookupvar('zipkin::jarname') %>"
+JAR_NAME="<%= scope.lookupvar('zipkin::jar_name') %>"
 PID_FILE="/var/run/$SERVICE.pid"
 USER="<%= scope['zipkin::user'] %>"
-PATH="<%= scope.lookupvar('zipkin::installdir') %>"
-export JAVA_HOME=<%= scope.lookupvar('zipkin::javahome') %>
+PATH="<%= scope.lookupvar('zipkin::install_dir') %>"
+export JAVA_HOME=<%= scope.lookupvar('zipkin::java_home') %>
 JAVA_XMS="<%= scope.lookupvar('zipkin::jvm_xms') %>"
 JAVA_XMX="<%= scope.lookupvar('zipkin::jvm_xmx') %>"
 JAVA_OPTS="<%= scope['zipkin::java_opts'] %>"

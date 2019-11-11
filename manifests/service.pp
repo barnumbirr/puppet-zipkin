@@ -36,9 +36,9 @@ class zipkin::service (
 
     if $zipkin::service_manage {
         service { 'zipkin':
-            ensure    => $service_ensure,
-            enable    => $service_enable,
-            require   => File[$service_file_location],
+            ensure  => $service_ensure,
+            enable  => $service_enable,
+            require => File[$service_file_location],
         }
     }
 }
