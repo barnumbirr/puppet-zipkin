@@ -1,6 +1,9 @@
 # == Class: zipkin::install
 #
-# Install zipkin, See README.md for more.
+# This class manages the installation of Zipkin.
+#
+# This class should not be used directly under normal circumstances
+# Instead, use the *zipkin* class.
 #
 
 class zipkin::install {
@@ -28,8 +31,8 @@ class zipkin::install {
         }
     }
 
-    if ! defined(File[$zipkin::installdir]) {
-        file { $zipkin::installdir:
+    if ! defined(File[$zipkin::install_dir]) {
+        file { $zipkin::install_dir:
             ensure => 'directory',
             owner  => $zipkin::user,
             group  => $zipkin::group,
@@ -42,12 +45,12 @@ class zipkin::install {
         checksum_url    => "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar.sha1",
         checksum_verify => $zipkin::checksum_verify,
         checksum_type   => 'sha1',
-        path            => "${zipkin::installdir}/${zipkin::jarname}",
-        require         => [User[$zipkin::user],File[$zipkin::installdir]],
+        path            => "${zipkin::install_dir}/${zipkin::jar_name}",
+        require         => [User[$zipkin::user],File[$zipkin::install_dir]],
         user            => $zipkin::user,
     }
 
-    file { "${zipkin::installdir}/${zipkin::jarname}":
+    file { "${zipkin::install_dir}/${zipkin::jar_name}":
         ensure  => 'file',
         owner   => $zipkin::user,
         group   => $zipkin::group,

@@ -12,7 +12,7 @@
     * [Classes](#classes)
         * [Public Classes](#public-classes)
         * [Private Classes](#private-classes)
-    * [Classes](#classes)
+    * [Parameters](#parameters)
         * [Zipkin Parameters](#zipkin-parameters)
         * [Java JVM parameters](#java-jvm-parameters)
         * [Miscellaneous parameters](#miscellaneous-parameters)
@@ -43,7 +43,7 @@ class { '::elasticsearch':
 }->
 class { '::zipkin':
     # JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
-    javahome => '/usr/lib/jvm/java-11-openjdk-amd64/',
+    java_home => '/usr/lib/jvm/java-11-openjdk-amd64/',
 }
 ```
 
@@ -53,7 +53,7 @@ java::package: openjdk-11-jre-headless
 java::version: '11.0.4+11-1~deb10u1'
 java::java_home: '/usr/lib/jvm/java-11-openjdk-amd64/'
 
-elasticsearch::version: '6.8.2'
+elasticsearch::version: '6.8.4'
 elasticsearch::manage_repo: true
 elasticsearch::java_install: false
 elasticsearch::restart_on_change: true
@@ -77,11 +77,11 @@ elasticsearch::instances:
       - '8:-Xloggc:/var/log/elasticsearch/default/gc.log'
       - '9-:-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/default/gc.log:utctime,pid,tags:filecount=32,filesize=64m'
 
-zipkin::javahome: "%{hiera('java::java_home')}"
-zipkin::version: '2.16.1'
+zipkin::java_home: "%{hiera('java::java_home')}"
+zipkin::version: '2.19.1'
 zipkin::user: 'zipkin'
 zipkin::group: 'zipkin'
-zipkin::installdir: '/opt/zipkin'
+zipkin::install_dir: '/opt/zipkin'
 zipkin::jvm_xms: '512m'
 zipkin::jvm_xmx: '2048m'
 zipkin::java_opts: '-DSTORAGE_TYPE=elasticsearch -DES_HOSTS=http://localhost:9200'

@@ -1,6 +1,9 @@
 # == Class: zipkin::params
 #
-# Defines default values for zipkin module
+# This class manages parameters for Zipkin.
+#
+# This class should not be used directly under normal circumstances
+# Instead, use the *zipkin* class.
 #
 
 class zipkin::params {

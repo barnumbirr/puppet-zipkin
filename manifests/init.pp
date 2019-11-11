@@ -5,27 +5,25 @@ class zipkin (
     $gid                                                           = undef,
     Stdlib::Absolutepath $shell                                    = '/bin/false',
     Boolean $manage_user                                           = true,
-    Stdlib::Absolutepath $installdir                               = '/opt/zipkin',
-    String $jarname                                                = 'zipkin.jar',
+    Stdlib::Absolutepath $install_dir                              = '/opt/zipkin',
+    String $jar_name                                               = 'zipkin.jar',
     Pattern[/^(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)(|[a-z])$/] $version = '2.14.0',
-    $javahome                                                      = undef ,
+    $java_home                                                     = undef ,
     $jvm_xms                                                       = '256m',
     $jvm_xmx                                                       = '1024m',
     $java_opts                                                     = '',
     Boolean $checksum_verify                                       = true,
-    $service_manage                                                = true,
-    $service_ensure                                                = running,
-    $service_enable                                                = true,
-    $service_notify                                                = undef,
-    $service_subscribe                                             = undef,
+    Boolean $service_manage                                        = true,
+    Enum['running', 'stopped'] $service_ensure                     = running,
+    Boolean $service_enable                                        = true,
     $stop_zipkin                                                   = 'service zipkin stop && sleep 15',
 
 ) inherits zipkin::params {
 
-    Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
+    Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin'] }
 
-    if $javahome == undef {
-        fail('You need to specify a value for $JAVA_HOME (zipkin::javahome).')
+    if $java_home == undef {
+        fail('You need to specify a value for $JAVA_HOME (zipkin::java_home).')
     }
 
     if defined('$::zipkin_version') {
