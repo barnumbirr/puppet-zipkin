@@ -39,10 +39,21 @@ class zipkin::install {
         }
     }
 
+    if $zipkin::use_slim {
+        $source       = "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-slim.jar"
+        $checksum_url = "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-slim.jar.sha1"
+        if $zipkin::java_opts =~ /(?i:KAFKA)/ or $zipkin::java_opts =~ /(?i:RABBIT)/ {
+            fail('The slim build of Zipkin doesn\'t support messaging transports like Kafka or RabbitMQ (https://github.com/openzipkin/zipkin#zipkin-slim).')
+        }
+    } else {
+        $source       = "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar"
+        $checksum_url = "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar.sha1"
+    }
+
     archive { 'zipkin':
         ensure          => 'present',
-        source          => "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar",
-        checksum_url    => "https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${zipkin::version}/zipkin-server-${zipkin::version}-exec.jar.sha1",
+        source          => $source,
+        checksum_url    => $checksum_url,
         checksum_verify => $zipkin::checksum_verify,
         checksum_type   => 'sha1',
         path            => "${zipkin::install_dir}/${zipkin::jar_name}",

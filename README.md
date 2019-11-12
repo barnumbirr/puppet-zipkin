@@ -36,7 +36,7 @@ To use this module ```Java``` and ```Elasticsearch``` will need to be installed.
 ```puppet
 class { '::java':
   package   => 'openjdk-11-jre-headless',
-  version   => '11.0.4+11-1~deb10u1',
+  version   => '11.0.5+10-1~deb10u1',
   java_home => '/usr/lib/jvm/java-11-openjdk-amd64/',
 }->
 class { '::elasticsearch':
@@ -50,7 +50,7 @@ class { '::zipkin':
 ### More complex example (using hiera)
 ```yaml
 java::package: openjdk-11-jre-headless
-java::version: '11.0.4+11-1~deb10u1'
+java::version: '11.0.5+10-1~deb10u1'
 java::java_home: '/usr/lib/jvm/java-11-openjdk-amd64/'
 
 elasticsearch::version: '6.8.4'
@@ -77,8 +77,39 @@ elasticsearch::instances:
       - '8:-Xloggc:/var/log/elasticsearch/default/gc.log'
       - '9-:-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/default/gc.log:utctime,pid,tags:filecount=32,filesize=64m'
 
+curator::repository_version: '5'
+curator::package_name: 'elasticsearch-curator'
+
+curator::actions::values:
+  'delete_zipkin_index':
+    entities:
+      1:
+        action: delete_indices
+        description: Delete indices older than 30 days (based on index name)
+        options:
+          continue_if_exception: True
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+          - filtertype: pattern
+            kind: prefix
+            value: zipkin
+          - filtertype: age
+            source: name
+            direction: older
+            timestring: '%Y-%m-%d'
+            unit: days
+            unit_count: 30
+
+curator::jobs::values:
+  'delete_zipkin_index':
+    action: 'delete_zipkin_index'
+    minute: 0
+    hour: 5
+
 zipkin::java_home: "%{hiera('java::java_home')}"
 zipkin::version: '2.19.1'
+zipkin::use_slim: true
 zipkin::user: 'zipkin'
 zipkin::group: 'zipkin'
 zipkin::install_dir: '/opt/zipkin'
