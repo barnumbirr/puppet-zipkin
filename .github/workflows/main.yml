@@ -1,0 +1,18 @@
+name: Build and publish to Puppet Forge
+
+on:
+ push:
+  tags:
+      - v*
+      - v.*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v1
+    - name: Build and publish module
+      uses: barnumbirr/publish-forge-action@v1.0.0
+      env:
+       FORGE_API_KEY: ${{ secrets.FORGE_API_KEY }}
+       REPOSITORY_URL: https://forgeapi.puppet.com/v3/releases
