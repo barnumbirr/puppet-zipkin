@@ -108,7 +108,7 @@ curator::jobs::values:
     hour: 5
 
 zipkin::java_home: "%{hiera('java::java_home')}"
-zipkin::version: '2.19.1'
+zipkin::version: '2.19.2'
 zipkin::use_slim: true
 zipkin::user: 'zipkin'
 zipkin::group: 'zipkin'

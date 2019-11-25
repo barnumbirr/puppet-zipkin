@@ -1,6 +1,6 @@
 {
   "name": "barnumbirr-zipkin",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "barnumbirr",
   "summary": "Install and manage OpenZipkin via Puppet",
   "license": "Apache-2.0",
