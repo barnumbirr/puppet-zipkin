@@ -162,7 +162,7 @@ The puppetlabs repositories can be found at: [yum.puppetlabs.com](https://yum.pu
 ## License:
 
 ```
-Copyright 2019 Martin Simon
+Copyright 2019-2020 Martin Simon
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
